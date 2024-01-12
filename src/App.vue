@@ -2,17 +2,22 @@
     <div>
         <header>
             <div class="wrapper">
-                <div></div>
+                <div class="title-container">
+                    <h3 class="title">Schlüsseldienst</h3>
+                </div>
                 <nav>
-                    <router-link to="/" class="custom-link" :class="{ 'active-link': $route.path === '/' }">Home</router-link>
-                    <router-link to="/about" class="custom-link" :class="{ 'active-link': $route.path === '/about' }">Service</router-link>
+                    <router-link to="/" class="custom-link" :class="{ 'active-link': $route.path === '/' }">
+                        <font-awesome-icon icon="fa-solid fa-house" />
+                    </router-link>
+                    <router-link to="/service" class="custom-link" :class="{ 'active-link': $route.path === '/service' }">
+                        <font-awesome-icon icon="fa-solid fa-key" />
+                    </router-link>
+                    <router-link to="login" class="custom-link" :class="{'active-link': $route.path === '/login'}">
+                        <font-awesome-icon icon="fa-solid fa-user" />
+                    </router-link>
                 </nav>
             </div>
         </header>
-
-        <body>
-
-        </body>
     </div>
 </template>
 
@@ -20,40 +25,19 @@
 import { RouterLink, RouterView } from 'vue-router';
 </script>
 
-<style scoped>
+<style>
 header {
-    background-color: #413f3f;
-    padding: 30px;
+    background-color: #484848;
+    padding: 10px;
     position: fixed;
     top: 0;
     left: 0;
     right: 0;
     z-index: 999;
-
 }
 
-body {
-    margin: 0; /* Setze den Seitenrand auf 0, um den Standardseitenrand zu entfernen */
-    background-color: #03daf8; /* Hintergrundfarbe des Body-Elements */
-    background-size: cover; /* Skaliert das Hintergrundbild, um die gesamte Fläche zu bedecken */
-}
-
-
-.image-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden;
-    z-index: -1; /* Setze das Bild hinter den anderen Elementen */
-}
-
-.image-container img {
-    width: 100vw; /* Breite des Viewports */
-    height: 100vh; /* Höhe des Viewports */
-    object-fit: cover; /* Skaliert das Bild, um die gesamte Fläche zu bedecken */
-    object-position: center; /* Position des Bildes im Container */
+body{
+    background-color: #575757;
 }
 
 .wrapper {
@@ -61,15 +45,26 @@ body {
     justify-content: space-between;
     align-items: center;
     font-size: 30px;
-    font-family: Calibri;
+    font-family: Arial;
     font-style: normal;
+}
+
+.title-container {
+    flex: 1; /* Fülle den verfügbaren Platz aus */
+
+}
+
+.title {
+    font-weight: bold; /* Mach die Schrift dicker */
+    font-size: larger;
+    color: white;
+    font-family: "Arial Black";
 }
 
 nav {
     display: flex;
     gap: 20px;
 }
-
 
 .custom-link {
     color: #fffafa; /* Farbe für nicht aktive Links */
@@ -79,7 +74,4 @@ nav {
     color: #4f6cff; /* Farbe für aktive Links */
     /* Hier könntest du auch andere Stile für aktive Links hinzufügen */
 }
-
-
-
 </style>

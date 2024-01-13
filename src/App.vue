@@ -1,77 +1,128 @@
 <template>
     <div>
-        <header>
-            <div class="wrapper">
-                <div class="title-container">
-                    <h3 class="title">Schlüsseldienst</h3>
-                </div>
-                <nav>
-                    <router-link to="/" class="custom-link" :class="{ 'active-link': $route.path === '/' }">
-                        <font-awesome-icon icon="fa-solid fa-house" />
-                    </router-link>
-                    <router-link to="/service" class="custom-link" :class="{ 'active-link': $route.path === '/service' }">
-                        <font-awesome-icon icon="fa-solid fa-key" />
-                    </router-link>
-                    <router-link to="login" class="custom-link" :class="{'active-link': $route.path === '/login'}">
-                        <font-awesome-icon icon="fa-solid fa-user" />
-                    </router-link>
-                </nav>
-            </div>
-        </header>
+        <div class="sidebar">
+            <router-link to="/" class="nav-link" :class="{ 'active': $route.path === '/' }">Home</router-link>
+            <router-link to="/service" class="nav-link" :class="{ 'active': $route.path === '/service' }">Service</router-link>
+            <router-link to="/login" class="nav-link" :class="{ 'active': $route.path === '/contact' }">Login</router-link>
+            <router-link to="/about" class="nav-link" :class="{ 'active': $route.path === '/about' }">About</router-link>
+        </div>
+
+        <div class="content">
+
+            <router-view></router-view>
+        </div>
     </div>
 </template>
 
 <script setup>
-import { RouterLink, RouterView } from 'vue-router';
+import { ref, watch } from 'vue';
+import { useRoute } from 'vue-router';
+
+const route = useRoute();
+
+watch(
+    () => route.path,
+    (newPath) => {
+        // Close sidebar when navigating to a new route (for mobile view)
+        if (window.innerWidth <= 700) {
+            toggleSidebar();
+        }
+    }
+);
+
+const sidebarOpen = ref(false);
+
+const toggleSidebar = () => {
+    sidebarOpen.value = !sidebarOpen.value;
+};
+
+// Close sidebar on initial load if in mobile view
+if (window.innerWidth <= 700) {
+    toggleSidebar();
+}
+
+// Close sidebar when clicking outside of it
+window.addEventListener('click', (event) => {
+    const sidebar = document.querySelector('.sidebar');
+    if (event.target !== sidebar && !sidebar.contains(event.target)) {
+        sidebarOpen.value = false;
+    }
+});
+
+// Update sidebar status on window resize
+window.addEventListener('resize', () => {
+    sidebarOpen.value = window.innerWidth > 700;
+});
 </script>
 
-<style>
-header {
-    background-color: #484848;
-    padding: 10px;
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 999;
+<style scoped>
+body {
+    margin: 0;
+    font-family: "Lato", sans-serif;
 }
 
-body{
-    background-color: #575757;
-}
-
-.wrapper {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: 30px;
-    font-family: Arial;
-    font-style: normal;
-}
-
-.title-container {
-    flex: 1; /* Fülle den verfügbaren Platz aus */
-
-}
-
-.title {
-    font-weight: bold; /* Mach die Schrift dicker */
-    font-size: larger;
+.content {
+    background-color: #7c7a7a;
     color: white;
-    font-family: "Arial Black";
+
 }
 
-nav {
-    display: flex;
-    gap: 20px;
+.sidebar {
+    margin: 0;
+    padding: 0;
+    width: 200px;
+    background-color: #424242;
+    position: fixed;
+    height: 100%;
+    overflow: auto;
+    transition: width 0.3s;
 }
 
-.custom-link {
-    color: #fffafa; /* Farbe für nicht aktive Links */
+.sidebar a {
+    display: block;
+    color: #ffffff;
+    padding: 16px;
+    text-decoration: none;
 }
 
-.active-link {
-    color: #4f6cff; /* Farbe für aktive Links */
-    /* Hier könntest du auch andere Stile für aktive Links hinzufügen */
+.sidebar a.active {
+    background-color: #504f4f;
+    color: #4f6cff;
+}
+
+.sidebar a:hover:not(.active) {
+    background-color: #504f4f;
+    color: #4f6cff;
+}
+
+div.content {
+    margin-left: 200px;
+    padding: 1px 16px;
+    height: 1000px;
+    transition: margin-left 0.3s;
+}
+
+@media screen and (max-width: 700px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+    .sidebar a {
+        float: left;
+    }
+    div.content {
+        margin-left: 0;
+    }
+    .sidebar:not(.open) {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .sidebar a {
+        text-align: center;
+        float: none;
+    }
 }
 </style>

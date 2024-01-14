@@ -1,20 +1,151 @@
-<script setup>
-
-</script>
-
 <template>
-    <body>
-    <div class="service">
-        <h2>Unsere Dienstleistungen</h2>
-        <p>
-            Hier kannst du Informationen zu den Dienstleistungen deines Unternehmens oder andere relevante Inhalte hinzufügen.
-        </p>
-    </div>
-    </body>
+    <div>
+        <h2>Schlüsselanfragen Formular</h2>
+        <p>Ändere die Browser-Fenstergröße, um den Effekt zu sehen. Wenn der Bildschirm weniger als 600 Pixel breit ist, sollen die beiden Spalten übereinander gestapelt werden, anstatt nebeneinander.</p>
 
+        <div class="container">
+            <form @submit.prevent="formularAbsenden">
+                <div class="row">
+                    <div class="col-25">
+                        <label for="vorname">Vorname</label>
+                    </div>
+                    <div class="col-75">
+                        <input v-model="vorname" type="text" id="vorname" name="vorname" placeholder="Dein Vorname.." required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="nachname">Nachname</label>
+                    </div>
+                    <div class="col-75">
+                        <input v-model="nachname" type="text" id="nachname" name="nachname" placeholder="Dein Nachname.." required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="telefon">Telefonnummer</label>
+                    </div>
+                    <div class="col-75">
+                        <div class="telefon-eingabe">
+                            <select v-model="laendervorwahl" id="laendervorwahl" name="laendervorwahl" required>
+                                <option value="+49">+49 (Deutschland)</option>
+                                <option value="+41">+41 (Schweiz)</option>
+                                <option value="+43">+43 (Österreich)</option>
+                                <!-- Füge weitere Optionen nach Bedarf hinzu -->
+                            </select>
+                            <input v-model="telefonnummer" type="text" id="telefonnummer" name="telefonnummer" placeholder="Deine Telefonnummer.." required>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-25">
+                        <label for="nachricht">Nachricht</label>
+                    </div>
+                    <div class="col-75">
+                        <textarea v-model="nachricht" id="nachricht" name="nachricht" placeholder="Schreibe etwas.." style="height:200px" required></textarea>
+                    </div>
+                </div>
+                <div class="row">
+                    <input type="submit" value="Absenden" class="absenden-btn">
+                </div>
+            </form>
+        </div>
+    </div>
 </template>
 
-<style>
+<script setup>
+import { ref } from 'vue';
 
+const vorname = ref('');
+const nachname = ref('');
+const laendervorwahl = ref('+49'); // Standardwert
+const telefonnummer = ref('');
+const nachricht = ref('');
 
+const formularAbsenden = () => {
+    // Implementiere hier deine Logik für die Formularübermittlung
+    // Greife auf Formulardaten zu mit vorname.value, nachname.value, laendervorwahl.value, telefonnummer.value und nachricht.value
+    console.log('Formular abgesendet:', {
+        vorname: vorname.value,
+        nachname: nachname.value,
+        laendervorwahl: laendervorwahl.value,
+        telefonnummer: telefonnummer.value,
+        nachricht: nachricht.value
+    });
+};
+</script>
+
+<style scoped>
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #575757;
+    color: white;
+}
+h2 {
+    font-weight: bold;
+}
+
+.container {
+    border-radius: 5px;
+    background-color: #484848;
+    padding: 20px;
+}
+
+input[type="text"],
+select,
+textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #666;
+    border-radius: 4px;
+    resize: vertical;
+    background-color: #777;
+    color: white;
+}
+
+.telefon-eingabe {
+    display: flex;
+    align-items: center;
+}
+
+label {
+    padding: 12px 12px 12px 0;
+    display: inline-block;
+    color: white;
+}
+
+input[type=submit] {
+    background-color: #04AA6D;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    float: right;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+}
+
+.col-25,
+.col-75 {
+    flex: 0 0 48%;
+    margin-top: 6px;
+}
+
+/* Responsives Layout - Wenn der Bildschirm weniger als 600 Pixel breit ist, sollen die beiden Spalten übereinander gestapelt werden, anstatt nebeneinander */
+@media screen and (max-width: 600px) {
+    .col-25,
+    .col-75,
+    input[type=submit] {
+        width: 100%;
+        margin-top: 0;
+    }
+}
 </style>

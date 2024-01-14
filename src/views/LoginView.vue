@@ -1,9 +1,9 @@
 <template>
     <div>
-        <form @submit.prevent="registerUser">
+        <form @submit.prevent="signInUser">
             <div class="container">
-                <h1>Register</h1>
-                <p>Please fill in this form to create an account.</p>
+                <h1>Sign In</h1>
+                <p>Please enter your credentials to sign in.</p>
                 <hr>
 
                 <label for="email"><b>Email</b></label>
@@ -11,17 +11,13 @@
 
                 <label for="password"><b>Password</b></label>
                 <input v-model="password" type="password" placeholder="Enter Password" name="password" required>
-
-                <label for="password-repeat"><b>Repeat Password</b></label>
-                <input v-model="passwordRepeat" type="password" placeholder="Repeat Password" name="password-repeat" required>
                 <hr>
-                <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
 
-                <button type="submit" class="registerbtn">Register</button>
+                <button type="submit" class="registerbtn">Sign In</button>
             </div>
 
-            <div class="container signin">
-                <p>Already have an account? <router-link to="/login">Sign in</router-link>.</p>
+            <div class="container register-container">
+                <p>Don't have an account? <router-link to="/register">Register</router-link>.</p>
             </div>
         </form>
     </div>
@@ -35,12 +31,11 @@ const router = useRouter();
 
 const email = ref('');
 const password = ref('');
-const passwordRepeat = ref('');
 
-const registerUser = () => {
-    // Implement your user registration logic here
-    // You can use email.value, password.value, and passwordRepeat.value to access form inputs
-    // Redirect to another route after successful registration
+const signInUser = () => {
+    // Implement your user sign-in logic here
+    // You can use email.value and password.value to access form inputs
+    // Redirect to another route after successful sign-in
     router.push('/dashboard');
 };
 </script>
@@ -98,7 +93,7 @@ a {
     color: #ffffff;
 }
 
-.signin {
+.register-container {
     background-color: #7c7a7a;
     text-align: center;
     font-weight: bold;

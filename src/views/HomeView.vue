@@ -26,7 +26,7 @@
         <!-- Bereich für zusätzliche Informationen -->
         <div class="additional-info">
             <h3 style="color: white;">Dienstleistungen</h3>
-            <p style="color: #ccc;">Hier können Sie weitere Informationen zu unseren Dienstleistungen, Preisen, usw. hinzufügen.</p>
+            <p style="color: #ccc;">Hier können Sie weitere Informationen zu unseren Dienstleistungen, Preisen, usw. zur Kenntnis nehmen.</p>
 
             <!-- Tabelle für Dienstleistungen -->
             <div class="search-container">

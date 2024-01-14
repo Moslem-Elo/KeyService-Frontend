@@ -2,8 +2,8 @@
     <div>
         <form @submit.prevent="registerUser">
             <div class="container">
-                <h1>Register</h1>
-                <p>Please fill in this form to create an account.</p>
+                <h1>Registrieren</h1>
+                <p>Bitte füllen sie die Felder aus.</p>
                 <hr>
 
                 <label for="email"><b>Email</b></label>
@@ -15,13 +15,13 @@
                 <label for="password-repeat"><b>Repeat Password</b></label>
                 <input v-model="passwordRepeat" type="password" placeholder="Repeat Password" name="password-repeat" required>
                 <hr>
-                <p>By creating an account you agree to our <a href="#">Terms & Privacy</a>.</p>
+                <p>Beim erstellen eines Accounts akzeptieren Sie unsere <router-link to="/nutzerbedingungen">Datenschutz & Nutzerbedingungen</router-link>.</p>
 
                 <button type="submit" class="registerbtn">Register</button>
             </div>
 
             <div class="container signin">
-                <p>Already have an account? <router-link to="/login">Sign in</router-link>.</p>
+                <p>Sie haben bereits einen Account? <router-link to="/login">Einloggen</router-link>.</p>
             </div>
         </form>
     </div>
@@ -55,6 +55,13 @@ body {
     padding: 16px;
     background-color: #7c7a7a;
     color: white;
+}
+
+h1 {
+    font-weight: bold;
+}
+
+p {
     font-weight: bold;
 }
 

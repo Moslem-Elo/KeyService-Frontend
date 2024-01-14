@@ -76,6 +76,7 @@ body {
     height: 100%;
     overflow: auto;
     transition: width 0.3s;
+    font-weight: bold;
 }
 
 .sidebar a {

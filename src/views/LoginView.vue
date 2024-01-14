@@ -3,21 +3,21 @@
         <form @submit.prevent="signInUser">
             <div class="container">
                 <h1>Sign In</h1>
-                <p>Please enter your credentials to sign in.</p>
+                <p>Bitte geben Sie ihre Daten ein um sich anzumelden.</p>
                 <hr>
 
                 <label for="email"><b>Email</b></label>
                 <input v-model="email" type="text" placeholder="Enter Email" name="email" required>
 
-                <label for="password"><b>Password</b></label>
+                <label for="password"><b>Passwort</b></label>
                 <input v-model="password" type="password" placeholder="Enter Password" name="password" required>
                 <hr>
 
-                <button type="submit" class="registerbtn">Sign In</button>
+                <button type="submit" class="registerbtn">Anmelden</button>
             </div>
 
             <div class="container register-container">
-                <p>Don't have an account? <router-link to="/register">Register</router-link>.</p>
+                <p>Noch keinen Account? <router-link to="/register">Registrieren</router-link>.</p>
             </div>
         </form>
     </div>
@@ -50,6 +50,13 @@ body {
     padding: 16px;
     background-color: #7c7a7a;
     color: white;
+}
+
+h1 {
+    font-weight: bold;
+}
+
+p {
     font-weight: bold;
 }
 

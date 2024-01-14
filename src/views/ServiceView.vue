@@ -75,7 +75,7 @@ const nachricht = ref('');
 
 const formularAbsenden = async () => {
     try {
-        const response = await axios.post('/dein/backend-endpoint', {
+        const response = await axios.post('http://localhost:8080/create', {
             message: nachricht.value,
             phoneNumber: `${laendervorwahl.value} ${telefonnummer.value}`,
             firstname: vorname.value,

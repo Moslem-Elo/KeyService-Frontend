@@ -1,7 +1,7 @@
 <template>
     <div>
         <h2>Schlüsselanfragen Formular</h2>
-        <p>Ändere die Browser-Fenstergröße, um den Effekt zu sehen. Wenn der Bildschirm weniger als 600 Pixel breit ist, sollen die beiden Spalten übereinander gestapelt werden, anstatt nebeneinander.</p>
+        <p></p>
 
         <div class="container">
             <form @submit.prevent="formularAbsenden">

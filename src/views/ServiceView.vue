@@ -1,5 +1,8 @@
 <template>
   <div>
+    <h2>Schlüsselanfragen Formular</h2>
+    <p></p>
+
     <div class="container">
       <form @submit.prevent="formularAbsenden">
         <div class="row">
@@ -42,6 +45,7 @@
             <input v-model="email" type="email" id="email" name="email" placeholder="Deine E-Mail-Adresse.." required>
           </div>
         </div>
+
         <div class="row">
           <div class="col-25">
             <label for="nachricht">Nachricht</label>
@@ -55,69 +59,12 @@
         </div>
       </form>
     </div>
-
-    <div class="additional-info">
-      <h3 style="color: white;">Key Requests</h3>
-      <div class="search-container">
-        <input type="text" id="myInput" @input="filterTable" placeholder="Dienstleistung suchen.." title="Geben Sie eine Dienstleistung ein">
-      </div>
-      <p style="color: #ccc;">Hier sind die aktuellen Key Requests:</p>
-
-      <table id="myTable">
-        <tr class="header">
-          <th style="width:60%;">Vorname</th>
-          <th style="width:40%;">Nachname</th>
-        </tr>
-        <tr v-for="request in keyRequests" :key="request.id" @click="showKeyRequestDetails(request)">
-          <td>{{ request.firstname }}</td>
-          <td>{{ request.lastname }}</td>
-        </tr>
-      </table>
-      <div class="modal" v-if="selectedKeyRequest">
-        <div class="modal-content">
-          <span class="close" @click="closeModal">&times;</span>
-          <h2>KeyRequest Details</h2>
-          <p><strong>Vorname:</strong> {{ selectedKeyRequest.firstname }}</p>
-          <p><strong>Nachname:</strong> {{ selectedKeyRequest.lastname }}</p>
-          <!-- Fügen Sie hier weitere Details hinzu -->
-        </div>
-    </div>
-  </div>
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
 import axios from 'axios';
-
-const selectedKeyRequest = ref(null);
-
-const showKeyRequestDetails = (request) => {
-  selectedKeyRequest.value = request;
-};
-
-const closeModal = () => {
-  selectedKeyRequest.value = null;
-};
-
-const filterTable = () => {
-  var input, filter, table, tr, td, i, txtValue;
-  input = document.getElementById("myInput");
-  filter = input.value.toUpperCase();
-  table = document.getElementById("myTable");
-  tr = table.getElementsByTagName("tr");
-  for (i = 0; i < tr.length; i++) {
-    td = tr[i].getElementsByTagName("td")[0];
-    if (td) {
-      txtValue = td.textContent || td.innerText;
-      if (txtValue.toUpperCase().indexOf(filter) > -1) {
-        tr[i].style.display = "";
-      } else {
-        tr[i].style.display = "none";
-      }
-    }
-  }
-};
 
 const vorname = ref('');
 const nachname = ref('');
@@ -125,16 +72,6 @@ const laendervorwahl = ref('+49');
 const telefonnummer = ref('');
 const email = ref('');
 const nachricht = ref('');
-const keyRequests = ref([]);
-
-const fetchKeyRequests = async () => {
-  try {
-    const response = await axios.get('http://localhost:8080/get-all');
-    keyRequests.value = response.data;
-  } catch (error) {
-    console.error('Fehler beim Abrufen der Key Requests:', error);
-  }
-};
 
 const formularAbsenden = async () => {
   try {
@@ -152,14 +89,10 @@ const formularAbsenden = async () => {
     console.error('Fehler bei der Übermittlung des Formulars:', error);
   }
 };
-
-onMounted(() => {
-  fetchKeyRequests();
-});
 </script>
 
-<style scoped>
 
+<style scoped>
 body {
   font-family: Arial, Helvetica, sans-serif;
   background-color: #575757;
@@ -169,19 +102,13 @@ h2 {
   font-weight: bold;
 }
 
-.additional-info {
-  text-align: left;
-  margin-top: 20px;
-  font-weight: bold;
-}
-
 .container {
   border-radius: 5px;
   background-color: #484848;
   padding: 20px;
 }
 
-input[type="email"] {
+input[type="email"] { /* Neues Stilregel für das E-Mail-Feld */
   width: 100%;
   padding: 12px;
   border: 1px solid #666;

@@ -4,6 +4,7 @@ import LoginView from "@/views/LoginView.vue";
 import ServiceView from "@/views/ServiceView.vue";
 import RegisterView from "@/views/RegisterView.vue";
 import NutzerbedingungenView from "@/views/NutzerbedingungenView.vue";
+import AdminServiceView from "@/views/AdminServiceView.vue";
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -35,6 +36,11 @@ const router = createRouter({
       path: '/nutzerbedingungen',
       name: 'nutzerbedingungen',
       component: NutzerbedingungenView
+    },
+    {
+      path: '/admin',
+      name: 'admin',
+      component: AdminServiceView
     }
   ]
 })

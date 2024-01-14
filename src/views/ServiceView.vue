@@ -39,6 +39,15 @@
                 </div>
                 <div class="row">
                     <div class="col-25">
+                        <label for="email">E-Mail-Adresse</label>
+                    </div>
+                    <div class="col-75">
+                        <input v-model="email" type="email" id="email" name="email" placeholder="Deine E-Mail-Adresse.." required>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-25">
                         <label for="nachricht">Nachricht</label>
                     </div>
                     <div class="col-75">
@@ -55,25 +64,33 @@
 
 <script setup>
 import { ref } from 'vue';
+import axios from 'axios';
 
 const vorname = ref('');
 const nachname = ref('');
-const laendervorwahl = ref('+49'); // Standardwert
+const laendervorwahl = ref('+49');
 const telefonnummer = ref('');
+const email = ref('');
 const nachricht = ref('');
 
-const formularAbsenden = () => {
-    // Implementiere hier deine Logik für die Formularübermittlung
-    // Greife auf Formulardaten zu mit vorname.value, nachname.value, laendervorwahl.value, telefonnummer.value und nachricht.value
-    console.log('Formular abgesendet:', {
-        vorname: vorname.value,
-        nachname: nachname.value,
-        laendervorwahl: laendervorwahl.value,
-        telefonnummer: telefonnummer.value,
-        nachricht: nachricht.value
-    });
+const formularAbsenden = async () => {
+    try {
+        const response = await axios.post('/dein/backend-endpoint', {
+            message: nachricht.value,
+            phoneNumber: `${laendervorwahl.value} ${telefonnummer.value}`,
+            firstname: vorname.value,
+            lastname: nachname.value,
+            email: email.value,
+            // Weitere Felder hinzufügen, falls erforderlich
+        });
+
+        console.log('Formular abgesendet:', response.data);
+    } catch (error) {
+        console.error('Fehler bei der Übermittlung des Formulars:', error);
+    }
 };
 </script>
+
 
 <style scoped>
 body {
@@ -91,6 +108,16 @@ h2 {
     padding: 20px;
 }
 
+input[type="email"] { /* Neues Stilregel für das E-Mail-Feld */
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #666;
+    border-radius: 4px;
+    resize: vertical;
+    background-color: #a8a3a3;
+    color: white;
+}
+
 input[type="text"],
 select,
 textarea {
@@ -99,7 +126,7 @@ textarea {
     border: 1px solid #666;
     border-radius: 4px;
     resize: vertical;
-    background-color: #777;
+    background-color: #a8a3a3;
     color: white;
 }
 

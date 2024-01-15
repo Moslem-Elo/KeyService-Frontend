@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h2>Schlüsselanfragen Formular</h2>
-    <p>Bitte geben Sie Ihre Daten ein.</p>
+    <h2>Durchsuchen der vorhandenen Anfragen</h2>
+
 
 
     <div class="additional-info">
@@ -116,11 +116,15 @@ body {
 h2 {
   font-weight: bold;
 }
+h3 {
+  font-weight: bold;
+}
 
 .additional-info {
   text-align: left;
   margin-top: 20px;
   font-weight: bold;
+  color: white;
 }
 
 .container {

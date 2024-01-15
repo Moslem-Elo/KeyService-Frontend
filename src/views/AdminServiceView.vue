@@ -2,8 +2,6 @@
   <div>
     <h2>Durchsuchen der vorhandenen Anfragen</h2>
 
-
-
     <div class="additional-info">
       <h3 style="color: white;">Key Requests</h3>
       <div class="search-container">
@@ -15,19 +13,23 @@
         <tr class="header">
           <th style="width:60%;">Vorname</th>
           <th style="width:40%;">Nachname</th>
+          <th style="width:10%;">Aktionen</th>
         </tr>
         <tr v-for="request in keyRequests" :key="request.id" @click="showKeyRequestDetails(request)">
           <td>{{ request.firstname }}</td>
           <td>{{ request.lastname }}</td>
+          <td><button @click="deleteKeyRequest(request.id)">Löschen</button></td>
         </tr>
       </table>
+
       <div class="modal" v-if="selectedKeyRequest">
         <div class="modal-content">
-          <span class="close" @click="closeModal">&times;</span>
+          <span class="close" @click="closeModal"></span>
           <h2>KeyRequest Details</h2>
           <p><strong>Vorname:</strong> {{ selectedKeyRequest.firstname }}</p>
           <p><strong>Nachname:</strong> {{ selectedKeyRequest.lastname }}</p>
-          <!-- Fügen Sie hier weitere Details hinzu -->
+          <p><strong>Email:</strong> {{ selectedKeyRequest.email }}</p>
+          <p><strong>Telefonnummer:</strong> {{ selectedKeyRequest.phoneNumber }}</p>
         </div>
       </div>
     </div>
@@ -67,12 +69,6 @@ const filterTable = () => {
   }
 };
 
-const vorname = ref('');
-const nachname = ref('');
-const laendervorwahl = ref('+49');
-const telefonnummer = ref('');
-const email = ref('');
-const nachricht = ref('');
 const keyRequests = ref([]);
 
 const fetchKeyRequests = async () => {
@@ -84,20 +80,13 @@ const fetchKeyRequests = async () => {
   }
 };
 
-const formularAbsenden = async () => {
+const deleteKeyRequest = async (keyRequestId) => {
   try {
-    const response = await axios.post('http://localhost:8080/create', {
-      message: nachricht.value,
-      phoneNumber: `${laendervorwahl.value} ${telefonnummer.value}`,
-      firstname: vorname.value,
-      lastname: nachname.value,
-      email: email.value,
-      // Weitere Felder hinzufügen, falls erforderlich
-    });
-
-    console.log('Formular abgesendet:', response.data);
+    await axios.delete(`http://localhost:8080/${keyRequestId}/delete`);
+    console.log('KeyRequest deleted');
+    fetchKeyRequests();
   } catch (error) {
-    console.error('Fehler bei der Übermittlung des Formulars:', error);
+    console.error('Fehler beim Löschen des Key Requests:', error);
   }
 };
 
@@ -126,7 +115,9 @@ h3 {
   font-weight: bold;
   color: white;
 }
-
+.close{
+<font-awesome-icon :icon="['fas', 'xmark']" />
+}
 .container {
   border-radius: 5px;
   background-color: #484848;

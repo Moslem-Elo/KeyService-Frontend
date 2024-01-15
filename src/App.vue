@@ -4,7 +4,6 @@
             <router-link to="/" class="nav-link" :class="{ 'active': $route.path === '/' }">Home</router-link>
             <router-link to="/service" class="nav-link" :class="{ 'active': $route.path === '/service' }">Service</router-link>
             <router-link to="/login" class="nav-link" :class="{ 'active': $route.path === '/contact' }">Login</router-link>
-            <router-link to="/about" class="nav-link" :class="{ 'active': $route.path === '/about' }">About</router-link>
         </div>
 
         <div class="content">

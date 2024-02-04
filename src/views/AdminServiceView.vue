@@ -5,7 +5,7 @@
     <div class="additional-info">
       <h3 style="color: white;">Key Requests</h3>
       <div class="search-container">
-        <input type="text" id="myInput" @input="filterTable" placeholder="Dienstleistung suchen.." title="Geben Sie eine Dienstleistung ein">
+        <input type="text" id="myInput" @input="filterTable" placeholder="Auftrag suchen.." title="Geben sie eine Auftragsnummer ein.">
       </div>
       <p style="color: #ccc;">Hier sind die aktuellen Key Requests:</p>
 
@@ -15,10 +15,12 @@
           <th style="width:40%;">Nachname</th>
           <th style="width:10%;">Aktionen</th>
         </tr>
-        <tr v-for="request in keyRequests" :key="request.id" @click="showKeyRequestDetails(request)">
+        <tr v-for="request in keyRequests" :key="request.id" :class="{ 'selected': selectedKeyRequest === request }" @click="showKeyRequestDetails(request)">
           <td>{{ request.firstname }}</td>
           <td>{{ request.lastname }}</td>
-          <td><button @click="deleteKeyRequest(request.id)">Löschen</button></td>
+          <td class="deleteButton">
+            <button class="deleteButton" @click="deleteKeyRequest(request.id)">Löschen</button>
+          </td>
         </tr>
       </table>
 
@@ -30,7 +32,12 @@
           <p><strong>Nachname:</strong> {{ selectedKeyRequest.lastname }}</p>
           <p><strong>Email:</strong> {{ selectedKeyRequest.email }}</p>
           <p><strong>Telefonnummer:</strong> {{ selectedKeyRequest.phoneNumber }}</p>
+          <p><strong>Nachricht:</strong> {{selectedKeyRequest.message}}</p>
         </div>
+      </div>
+      <div v-if="showAlert" class="alert success">
+        <span class="closebtn" @click="closeAlert">&times;</span>
+        <strong>{{ alertMessage }}</strong>
       </div>
     </div>
   </div>
@@ -39,6 +46,12 @@
 <script setup>
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
+
+const showAlert = ref(false);
+const closeAlert = () => {
+  showAlert.value = false;
+};
+const alertMessage = "Löschen erfolgreich!";
 
 const selectedKeyRequest = ref(null);
 
@@ -82,9 +95,15 @@ const fetchKeyRequests = async () => {
 
 const deleteKeyRequest = async (keyRequestId) => {
   try {
-    await axios.delete(`http://localhost:8080/${keyRequestId}/delete`);
-    console.log('KeyRequest deleted');
-    fetchKeyRequests();
+    const confirmed = confirm('Sind Sie sicher, dass Sie diesen KeyRequest löschen möchten?');
+    if (confirmed) {
+      await axios.delete(`http://localhost:8080/${keyRequestId}/delete`);
+      console.log('KeyRequest deleted');
+      showAlert.value = true;
+      // Remove the selectedKeyRequest from keyRequests array
+      keyRequests.value = keyRequests.value.filter(request => request.id !== keyRequestId);
+      selectedKeyRequest.value = null; // Reset selectedKeyRequest
+    }
   } catch (error) {
     console.error('Fehler beim Löschen des Key Requests:', error);
   }
@@ -93,9 +112,70 @@ const deleteKeyRequest = async (keyRequestId) => {
 onMounted(() => {
   fetchKeyRequests();
 });
+
 </script>
 
 <style scoped>
+.modal{
+  background-color: #575757;
+  border-radius: 5px;
+  font-size: 20px;
+}
+.deleteButton button {
+  color: white;
+  background-color: red;
+  font-weight: bold;
+  border-radius: 10px;
+  transition: background-color 0.3s;
+}
+.deleteButton button:hover {
+  background-color: #f63e3e; /* Hervorhebungsfarbe beim Hovern */
+}
+
+.selected {
+  background-color: #575757; /* Hervorhebungsfarbe für ausgewählte Zeile */
+  border-radius: 10px;
+}
+.selected td {
+  border-radius: 10px;
+  padding: 10px;
+  color: #4f6cff;
+}
+#myTable tr.selected:hover {
+  cursor: pointer; /* Ändern Sie hier den Mauszeiger-Stil, zum Beispiel zu 'pointer' für einen Zeiger */
+}
+.alert {
+  padding: 20px;
+  color: white;
+  font-weight: bold;
+  margin-top: 20px;
+  border-radius: 10px;
+}
+
+.success {
+  background-color: #ff020a;
+}
+
+.error {
+  background-color: #fd6054;
+}
+#myTable tr:hover {
+  cursor: pointer; /* Ändern Sie hier den Mauszeiger-Stil, zum Beispiel zu 'pointer' für einen Zeiger */
+}
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.closebtn:hover {
+  color: black;
+}
 
 body {
   font-family: Arial, Helvetica, sans-serif;
@@ -115,9 +195,7 @@ h3 {
   font-weight: bold;
   color: white;
 }
-.close{
-<font-awesome-icon :icon="['fas', 'xmark']" />
-}
+
 .container {
   border-radius: 5px;
   background-color: #484848;

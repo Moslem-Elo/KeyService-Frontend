@@ -1,7 +1,6 @@
 <template>
   <div>
     <h2>Schlüsselanfragen Formular</h2>
-    <p></p>
 
     <div class="container">
       <form @submit.prevent="formularAbsenden">
@@ -31,7 +30,6 @@
                 <option value="+49">+49 (Deutschland)</option>
                 <option value="+41">+41 (Schweiz)</option>
                 <option value="+43">+43 (Österreich)</option>
-                <!-- Füge weitere Optionen nach Bedarf hinzu -->
               </select>
               <input v-model="telefonnummer" type="text" id="telefonnummer" name="telefonnummer" placeholder="Deine Telefonnummer.." required>
             </div>
@@ -54,16 +52,30 @@
             <textarea v-model="nachricht" id="nachricht" name="nachricht" placeholder="Schreibe etwas.." style="height:200px" required></textarea>
           </div>
         </div>
+        <!-- Bild hochladen -->
+        <div class="row">
+          <div class="col-25">
+            <label for="bild">Bild</label>
+          </div>
+          <div class="col-75">
+            <input type="file" id="bild" name="bild" accept="image/*">
+          </div>
+        </div>
         <div class="row">
           <input type="submit" value="Absenden" class="absenden-btn">
         </div>
       </form>
     </div>
+
+    <div v-if="showAlert" :class="alertClass">
+      <span class="closebtn" @click="closeAlert">&times;</span>
+      <strong>{{ alertMessage }}</strong>
+    </div>
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import axios from 'axios';
 
 const vorname = ref('');
@@ -73,26 +85,83 @@ const telefonnummer = ref('');
 const email = ref('');
 const nachricht = ref('');
 
+const showAlert = ref(false);
+const showErrorAlert = ref(false);
+
+const closeAlert = () => {
+  showAlert.value = false;
+  showErrorAlert.value = false;
+};
+
 const formularAbsenden = async () => {
   try {
-    const response = await axios.post('http://localhost:8080/create', {
-      message: nachricht.value,
-      phoneNumber: `${laendervorwahl.value} ${telefonnummer.value}`,
-      firstname: vorname.value,
-      lastname: nachname.value,
-      email: email.value,
-      // Weitere Felder hinzufügen, falls erforderlich
+    // Erste POST-Anfrage
+    const formData = new FormData();
+    const bildInput = document.getElementById('bild');
+    const selectedFile = bildInput.files[0];
+    formData.append('message', nachricht.value);
+    formData.append('phoneNumber', `${laendervorwahl.value} ${telefonnummer.value}`);
+    formData.append('firstname', vorname.value);
+    formData.append('lastname', nachname.value);
+    formData.append('email', email.value);
+    formData.append('bild', selectedFile);
+
+    const response1 = await axios.post('http://localhost:8080/create', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
     });
 
-    console.log('Formular abgesendet:', response.data);
+
+    showAlert.value = true;
+    console.log('Formular abgesendet:', response1.data);
   } catch (error) {
     console.error('Fehler bei der Übermittlung des Formulars:', error);
+    showErrorAlert.value = true;
   }
 };
+
+const alertClass = computed(() => {
+  return showErrorAlert.value ? 'alert error' : 'alert success';
+});
+
+const alertMessage = computed(() => {
+  return showErrorAlert.value ? 'Fehler beim Senden!' : 'Senden erfolgreich!';
+});
 </script>
 
-
 <style scoped>
+.alert {
+  padding: 20px;
+  color: white;
+  font-weight: bold;
+  margin-top: 20px;
+  border-radius: 10px;
+}
+
+.success {
+  background-color: #45a049;
+}
+
+.error {
+  background-color: #f44336;
+}
+
+.closebtn {
+  margin-left: 15px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  line-height: 20px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.closebtn:hover {
+  color: black;
+}
+
 body {
   font-family: Arial, Helvetica, sans-serif;
   background-color: #575757;
@@ -108,7 +177,7 @@ h2 {
   padding: 20px;
 }
 
-input[type="email"] { /* Neues Stilregel für das E-Mail-Feld */
+input[type="email"] {
   width: 100%;
   padding: 12px;
   border: 1px solid #666;
@@ -166,7 +235,6 @@ input[type=submit]:hover {
   margin-top: 6px;
 }
 
-/* Responsives Layout - Wenn der Bildschirm weniger als 600 Pixel breit ist, sollen die beiden Spalten übereinander gestapelt werden, anstatt nebeneinander */
 @media screen and (max-width: 600px) {
   .col-25,
   .col-75,

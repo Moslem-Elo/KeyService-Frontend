@@ -35,11 +35,11 @@ const password = ref('');
 const signInUser = () => {
   // Beispiel: Einfache Überprüfung von E-Mail und Passwort
   if (email.value === 'admin' && password.value === 'password123') {
-    // Hier können Sie weitere Aktionen durchführen (z.B., Zustand aktualisieren, Benutzer weiterleiten)
+    // Hier kann man weitere Aktionen durchführen (z.B., Zustand aktualisieren, Benutzer weiterleiten)
     console.log('Anmeldung erfolgreich');
     router.push('/admin');
   } else {
-    // Hier können Sie eine Fehlermeldung anzeigen oder entsprechend handeln
+
     console.error('Anmeldung fehlgeschlagen. Überprüfen Sie E-Mail und Passwort.');
   }
 };

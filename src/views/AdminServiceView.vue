@@ -33,11 +33,23 @@
           <p><strong>Email:</strong> {{ selectedKeyRequest.email }}</p>
           <p><strong>Telefonnummer:</strong> {{ selectedKeyRequest.phoneNumber }}</p>
           <p><strong>Nachricht:</strong> {{selectedKeyRequest.message}}</p>
+          <p><strong>Status:</strong> {{selectedKeyRequest.status}} </p>
+          <div>
+            <label for="statusSelect">Status ändern:</label>
+            <select id="statusSelect" v-model="selectedStatus">
+              <option v-for="status in statuses" :key="status" :value="status">{{ status }}</option>
+            </select>
+            <button class="updateButton" @click="updateStatus">Status aktualisieren</button>
+          </div>
         </div>
       </div>
       <div v-if="showAlert" class="alert success">
         <span class="closebtn" @click="closeAlert">&times;</span>
         <strong>{{ alertMessage }}</strong>
+      </div>
+      <div v-if="showAlertUpdate" class="alert update" :class="{ 'alert-update-animate': alertAnimationTrigger }">
+        <span class="closebtn" @click="closeAlertUpdate">&times;</span>
+        <strong>{{ alertMessageUpdate }}</strong>
       </div>
     </div>
   </div>
@@ -51,10 +63,22 @@ const showAlert = ref(false);
 const closeAlert = () => {
   showAlert.value = false;
 };
+const showAlertUpdate = ref(false);
+const closeAlertUpdate = () => {
+  showAlertUpdate.value = false;
+};
+
 const alertMessage = "Löschen erfolgreich!";
-
+const alertMessageUpdate = 'Status erfolgreich aktualisiert!';
 const selectedKeyRequest = ref(null);
+const alertAnimationTrigger = ref(false);
 
+const triggerAlertAnimation = () => {
+  alertAnimationTrigger.value = true;
+  setTimeout(() => {
+    alertAnimationTrigger.value = false;
+  }, 500); // Wartezeit sollte der Dauer der Animation entsprechen
+};
 const showKeyRequestDetails = (request) => {
   selectedKeyRequest.value = request;
 };
@@ -62,6 +86,8 @@ const showKeyRequestDetails = (request) => {
 const closeModal = () => {
   selectedKeyRequest.value = null;
 };
+const statuses = ref([]); // Hinzufügen dieser Zeile
+const selectedStatus = ref(''); // Stellen Sie sicher, dass diese Zeile vorhanden ist
 
 const filterTable = () => {
   var input, filter, table, tr, td, i, txtValue;
@@ -108,14 +134,51 @@ const deleteKeyRequest = async (keyRequestId) => {
     console.error('Fehler beim Löschen des Key Requests:', error);
   }
 };
+const fetchStatuses = async () => {
+  try {
+    const response = await axios.get('http://localhost:8080/all-keystatus'); // Pfad anpassen entsprechend Ihrem Backend
+    statuses.value = response.data;
+  } catch (error) {
+    console.error('Fehler beim Abrufen der Statusoptionen:', error);
+  }
+};
+
+const updateStatus = async () => {
+  console.log("geschlossen");
+
+  try {
+    const url = `http://localhost:8080/${selectedKeyRequest.value.id}/update-status?status=${encodeURIComponent(selectedStatus.value)}`;
+    await axios.put(url);
+    selectedKeyRequest.value.status = selectedStatus.value; // Aktualisiert den Status in der UI
+    if(showAlertUpdate.value == true){
+      triggerAlertAnimation();
+    }else{
+      showAlertUpdate.value = true;
+    }
+
+  } catch (error) {
+    console.error('Fehler beim Aktualisieren des Status:', error);
+  }
+};
 
 onMounted(() => {
   fetchKeyRequests();
+  fetchStatuses(); // Ruft Statusoptionen beim Initialisieren der Komponente ab
 });
+
 
 </script>
 
 <style scoped>
+@keyframes blink-animation {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.alert-update-animate {
+  animation: blink-animation 1s ease-in-out;
+}
+
 .modal{
   background-color: #575757;
   border-radius: 5px;
@@ -150,6 +213,9 @@ onMounted(() => {
   font-weight: bold;
   margin-top: 20px;
   border-radius: 10px;
+}
+.update {
+  background-color: #ff7300;
 }
 
 .success {

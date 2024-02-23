@@ -9,7 +9,7 @@
       </div>
       <p style="color: #ccc;">Hier sind die aktuellen Key Requests:</p>
 
-      <table id="myTable">
+      <table class="selected-table" id="myTable">
         <tr class="header">
           <th style="width:60%;">Vorname</th>
           <th style="width:40%;">Nachname</th>
@@ -34,12 +34,14 @@
           <p><strong>Telefonnummer:</strong> {{ selectedKeyRequest.phoneNumber }}</p>
           <p><strong>Nachricht:</strong> {{selectedKeyRequest.message}}</p>
           <p><strong>Status:</strong> {{selectedKeyRequest.status}} </p>
-          <div>
+          <div class="setStatus">
             <label for="statusSelect">Status ändern:</label>
-            <select id="statusSelect" v-model="selectedStatus">
-              <option v-for="status in statuses" :key="status" :value="status">{{ status }}</option>
-            </select>
-            <button class="updateButton" @click="updateStatus">Status aktualisieren</button>
+            <div class="status-update-container">
+              <select id="statusSelect" v-model="selectedStatus" class="status-select">
+                <option v-for="status in statuses" :key="status" :value="status">{{ status }}</option>
+              </select>
+              <button class="updateButton" @click="updateStatus">Status aktualisieren</button>
+            </div>
           </div>
         </div>
       </div>
@@ -144,18 +146,16 @@ const fetchStatuses = async () => {
 };
 
 const updateStatus = async () => {
-  console.log("geschlossen");
-
   try {
-    const url = `http://localhost:8080/${selectedKeyRequest.value.id}/update-status?status=${encodeURIComponent(selectedStatus.value)}`;
+    const url = `http://localhost:8080/${selectedKeyRequest.value.id}/update-status?status=${encodeURIComponent(selectedStatus.value)}&email=${encodeURIComponent(selectedKeyRequest.value.email)}`;
     await axios.put(url);
     selectedKeyRequest.value.status = selectedStatus.value; // Aktualisiert den Status in der UI
+
     if(showAlertUpdate.value == true){
       triggerAlertAnimation();
-    }else{
+    } else {
       showAlertUpdate.value = true;
     }
-
   } catch (error) {
     console.error('Fehler beim Aktualisieren des Status:', error);
   }
@@ -170,6 +170,18 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.status-select {
+  width: 30%; /* Passen Sie dies an Ihre Bedürfnisse an */
+  padding: 5px;
+  border-radius: 4px;
+  background-color: #a8a3a3;
+  color: white;
+  border: 1px solid #666;
+}
+.status-select:hover{
+  cursor: pointer;
+}
+
 @keyframes blink-animation {
   0%, 100% { opacity: 1; }
   50% { opacity: 0; }
@@ -184,6 +196,36 @@ onMounted(() => {
   border-radius: 5px;
   font-size: 20px;
 }
+.updateButton{
+  color: white;
+  background-color: #ff6a00;
+  font-weight: bold;
+  border-radius: 10px;
+  transition: background-color 0.3s;
+
+}
+
+.updateButton:hover {
+  background-color: #f6a36a;
+  cursor: pointer;
+}
+
+.setStatus {
+  display: flex;
+  flex-direction: column; /* Stellt sicher, dass das Label über den anderen Elementen steht */
+  //align-items: flex-start; /* Richtet den Container am rechten Rand aus */
+}
+.status-update-container {
+  display: flex;
+  justify-content: flex-start;/* Richtet die Elemente nach rechts aus */
+  align-items: center; /* Zentriert die Elemente vertikal */
+  gap: 55%; /* Fügt einen Abstand zwischen den Elementen hinzu */
+}
+.button-container {
+  display: flex;
+  justify-content:flex-end; /* Ausrichtung des Buttons am Ende des Containers */
+}
+
 .deleteButton button {
   color: white;
   background-color: red;
@@ -192,17 +234,21 @@ onMounted(() => {
   transition: background-color 0.3s;
 }
 .deleteButton button:hover {
-  background-color: #f63e3e; /* Hervorhebungsfarbe beim Hovern */
+  background-color: #ef7b7b; /* Hervorhebungsfarbe beim Hovern */
+  cursor: pointer;
 }
 
-.selected {
+.selected-table {
   background-color: #575757; /* Hervorhebungsfarbe für ausgewählte Zeile */
   border-radius: 10px;
+  font-size: larger;
 }
 .selected td {
   border-radius: 10px;
-  padding: 10px;
+  //padding: 10px;
+  background-color: #858484;
   color: #4f6cff;
+
 }
 #myTable tr.selected:hover {
   cursor: pointer; /* Ändern Sie hier den Mauszeiger-Stil, zum Beispiel zu 'pointer' für einen Zeiger */

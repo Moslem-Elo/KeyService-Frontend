@@ -53,7 +53,7 @@ body {
 
 .container {
   padding: 16px;
-  background-color: #7c7a7a;
+
   color: white;
 }
 
@@ -106,7 +106,7 @@ a {
 }
 
 .register-container {
-  background-color: #7c7a7a;
+
   text-align: center;
   font-weight: bold;
 }

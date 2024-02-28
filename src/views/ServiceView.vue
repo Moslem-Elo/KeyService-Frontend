@@ -6,7 +6,7 @@
       <form @submit.prevent="formularAbsenden">
         <div class="row">
           <div class="col-25">
-            <label for="vorname">Vorname</label>
+            <label for="vorname">Vorname:</label>
           </div>
           <div class="col-75">
             <input v-model="vorname" type="text" id="vorname" name="vorname" placeholder="Dein Vorname.." required>
@@ -14,7 +14,7 @@
         </div>
         <div class="row">
           <div class="col-25">
-            <label for="nachname">Nachname</label>
+            <label for="nachname">Nachname:</label>
           </div>
           <div class="col-75">
             <input v-model="nachname" type="text" id="nachname" name="nachname" placeholder="Dein Nachname.." required>
@@ -22,7 +22,7 @@
         </div>
         <div class="row">
           <div class="col-25">
-            <label for="telefon">Telefonnummer</label>
+            <label for="telefon">Telefonnummer:</label>
           </div>
           <div class="col-75">
             <div class="telefon-eingabe">
@@ -37,7 +37,7 @@
         </div>
         <div class="row">
           <div class="col-25">
-            <label for="email">E-Mail-Adresse</label>
+            <label for="email">E-Mail-Adresse:</label>
           </div>
           <div class="col-75">
             <input v-model="email" type="email" id="email" name="email" placeholder="Deine E-Mail-Adresse.." required>
@@ -46,7 +46,7 @@
 
         <div class="row">
           <div class="col-25">
-            <label for="nachricht">Nachricht</label>
+            <label for="nachricht">Nachricht:</label>
           </div>
           <div class="col-75">
             <textarea v-model="nachricht" id="nachricht" name="nachricht" placeholder="Schreibe etwas.." style="height:200px" required></textarea>
@@ -55,7 +55,7 @@
         <!-- Bild hochladen -->
         <div class="row">
           <div class="col-25">
-            <label for="bild">Bild</label>
+            <label for="bild">Bild:</label>
           </div>
           <div class="col-75">
             <input type="file" id="bild" name="bild" accept="image/*">
@@ -149,7 +149,7 @@ const alertMessage = computed(() => {
 
 .closebtn {
   margin-left: 15px;
-  color: white;
+  color: #fffcfc;
   font-weight: bold;
   float: right;
   font-size: 22px;
@@ -165,26 +165,28 @@ const alertMessage = computed(() => {
 body {
   font-family: Arial, Helvetica, sans-serif;
   background-color: #575757;
-  color: white;
+  color: #000000;
 }
 h2 {
   font-weight: bold;
+  color: #f5f5f6;
+  text-align: center;
 }
 
 .container {
   border-radius: 5px;
-  background-color: #484848;
+  background-color: #fffcfc; /*Farbe vom Formular*/
   padding: 20px;
 }
 
 input[type="email"] {
   width: 100%;
   padding: 12px;
-  border: 1px solid #666;
+  border: 1px solid #000000;
   border-radius: 4px;
   resize: vertical;
-  background-color: #a8a3a3;
-  color: white;
+  background-color: #fffcfc;
+  color: #fffcfc;
 }
 
 input[type="text"],
@@ -192,27 +194,46 @@ select,
 textarea {
   width: 100%;
   padding: 12px;
-  border: 1px solid #666;
+  border: 1px solid #000000;
   border-radius: 4px;
   resize: vertical;
-  background-color: #a8a3a3;
-  color: white;
+  background-color: #fffcfc;
+  color: #fffcfc;
 }
 
 .telefon-eingabe {
-  display: flex;
-  align-items: center;
+  display: flex; /* Aktiviert Flexbox */
+  align-items: center; /* Zentriert die Elemente vertikal */
+  gap: 10px; /* Fügt einen Abstand zwischen den Elementen hinzu */
+}
+
+.telefon-eingabe select, .telefon-eingabe input[type="text"] {
+  flex-grow: 1; /* Beide Elemente nehmen verfügbaren Platz ein */
+  background-color: #fffcfc; /* Hintergrundfarbe */
+  color: #000000; /* Schriftfarbe */
+  border: 1px solid #000000; /* Grenzfarbe */
+  padding: 10px; /* Innenabstand */
+  border-radius: 4px; /* Ecken abrunden */
+}
+
+/* Optional: Anpassen der Breite spezifisch für das Dropdown und das Textfeld, falls nötig */
+.telefon-eingabe select {
+  width: 30%; /* Breite des Dropdown-Menüs */
+}
+
+.telefon-eingabe input[type="text"] {
+  width: 70%; /* Breite des Textfeldes */
 }
 
 label {
   padding: 12px 12px 12px 0;
   display: inline-block;
-  color: white;
+  color: #000000;
 }
 
 input[type=submit] {
   background-color: #04AA6D;
-  color: white;
+  color: #fffcfc;
   padding: 12px 20px;
   border: none;
   border-radius: 4px;
@@ -233,6 +254,8 @@ input[type=submit]:hover {
 .col-75 {
   flex: 0 0 48%;
   margin-top: 6px;
+  font-weight: bold;
+  color: black;
 }
 
 @media screen and (max-width: 600px) {

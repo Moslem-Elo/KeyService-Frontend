@@ -1,6 +1,7 @@
 <template>
-    <div>
-        <h1 style="color: white;">Schlüsseldienst</h1>
+  <h1>Expert</h1>
+  <p> Schuh- und Schlüsselservice</p>
+  <div>
 
         <!-- 24h Notdienst Button -->
         <div class="emergency-button">
@@ -88,7 +89,13 @@ const filterTable = () => {
 </script>
 
 <style scoped>
-
+.logo {
+  display: block; /* Stellt sicher, dass das Logo korrekt gerendert wird */
+  margin: 0 auto; /* Zentriert das Logo innerhalb der Sidebar */
+  padding: 0px 0; /* Fügt oben und unten etwas Platz hinzu */
+  width: 100%; /* Passt die Breite des Logos an */
+  max-height: 100px; /* Beschränkt die Höhe des Logos, um Übergrößen zu vermeiden */
+}
 .search-container {
     margin-bottom: 20px;
     text-align: left;
@@ -115,7 +122,7 @@ const filterTable = () => {
     padding: 5px;
 }
 
-h1 {
+h1, p {
     text-align: center;
     color: white;
     font-weight: bold;

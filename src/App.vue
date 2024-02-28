@@ -1,6 +1,8 @@
 <template>
+
     <div>
         <div class="sidebar">
+            <img src="@/assets/slogo2.jpg" alt="Logo" class="logo"/>
             <router-link to="/" class="nav-link" :class="{ 'active': $route.path === '/' }">Home</router-link>
             <router-link to="/service" class="nav-link" :class="{ 'active': $route.path === '/service' }">Service</router-link>
             <router-link to="/login" class="nav-link" :class="{ 'active': $route.path === '/contact' }">Login</router-link>
@@ -55,22 +57,38 @@ window.addEventListener('resize', () => {
 </script>
 
 <style scoped>
+.logo {
+  display: block; /* Stellt sicher, dass das Logo korrekt gerendert wird */
+  margin: 0 auto; /* Zentriert das Logo innerhalb der Sidebar */
+  padding: 0px 0; /* Fügt oben und unten etwas Platz hinzu */
+  width: 100%; /* Passt die Breite des Logos an */
+  max-height: 100px; /* Beschränkt die Höhe des Logos, um Übergrößen zu vermeiden */
+}
+.logo2 {
+   /* Stellt sicher, dass das Logo korrekt gerendert wird */
+   /* Zentriert das Logo innerhalb der Sidebar */
+  padding: 10px 0; /* Fügt oben und unten etwas Platz hinzu */
+  width: 30%; /* Passt die Breite des Logos an */
+  max-height: 100px;
+  align-self: center;/* Beschränkt die Höhe des Logos, um Übergrößen zu vermeiden */
+}
 body {
     margin: 0;
     font-family: "Lato", sans-serif;
 }
 
-.content {
-    background-color: #7c7a7a;
-    color: white;
 
+.content {
+  background-image: url('@/assets/background.jpg');
+  color: #fffcfc;
 }
+
 
 .sidebar {
     margin: 0;
     padding: 0;
     width: 200px;
-    background-color: #424242;
+    background-color: #ffffff;
     position: fixed;
     height: 100%;
     overflow: auto;
@@ -80,19 +98,19 @@ body {
 
 .sidebar a {
     display: block;
-    color: #ffffff;
+    color: #000000;
     padding: 16px;
     text-decoration: none;
 }
 
 .sidebar a.active {
-    background-color: #504f4f;
-    color: #4f6cff;
+    background-color: #516be1;
+    color: #fffcfc;
 }
 
 .sidebar a:hover:not(.active) {
-    background-color: #504f4f;
-    color: #4f6cff;
+    background-color: #516be1;
+    color: #fffcfc;
 }
 
 div.content {

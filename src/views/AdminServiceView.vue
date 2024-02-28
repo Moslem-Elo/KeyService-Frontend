@@ -196,20 +196,39 @@ onMounted(() => {
   border-radius: 5px;
   font-size: 20px;
 }
-.updateButton{
-  color: white;
-  background-color: #ff6a00;
-  font-weight: bold;
-  border-radius: 10px;
-  transition: background-color 0.3s;
-
-}
-
-.updateButton:hover {
-  background-color: #f6a36a;
+.updateButton, .deleteButton button {
   cursor: pointer;
+  position: relative;
+  padding: 10px 20px; /* Angepasst für Konsistenz */
+  border-radius: 10px;
+  font-weight: bold;
+  line-height: 1;
+  text-align: center;
+  transition: background-color 0.3s;
+  border: none; /* Entfernt den Standardrand */
 }
 
+/* Hover-Effekte */
+.updateButton:hover, .deleteButton button:hover {
+  background-color: #fc761a; /* Leichtere Farbe für Hover bei updateButton */
+  color: white; /* Stellt sicher, dass die Textfarbe konsistent bleibt */
+}
+
+/* Spezieller Hover-Effekt für deleteButton */
+.deleteButton button:hover {
+  background-color: #ef7b7b; /* Spezifische Hover-Farbe für deleteButton */
+}
+
+/* Zusätzlicher Stil für spezielle Effekte (wenn benötigt) */
+.updateButton::before, .updateButton::after,
+.deleteButton button::before, .deleteButton button::after {
+  /* Hier könnten Sie die speziellen ::before und ::after Stile einfügen */
+  /* Beispiel: */
+  content: "";
+  display: block;
+  position: absolute;
+  /* Spezifische Stile für den dekorativen Effekt */
+}
 .setStatus {
   display: flex;
   flex-direction: column; /* Stellt sicher, dass das Label über den anderen Elementen steht */
@@ -226,17 +245,7 @@ onMounted(() => {
   justify-content:flex-end; /* Ausrichtung des Buttons am Ende des Containers */
 }
 
-.deleteButton button {
-  color: white;
-  background-color: red;
-  font-weight: bold;
-  border-radius: 10px;
-  transition: background-color 0.3s;
-}
-.deleteButton button:hover {
-  background-color: #ef7b7b; /* Hervorhebungsfarbe beim Hovern */
-  cursor: pointer;
-}
+
 
 .selected-table {
   background-color: #575757; /* Hervorhebungsfarbe für ausgewählte Zeile */

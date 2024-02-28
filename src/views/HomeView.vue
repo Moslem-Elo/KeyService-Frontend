@@ -128,21 +128,40 @@ h1, p {
 }
 
 .emergency-button {
-    position: fixed;
-    top: 10px;
-    right: 10px;
+  position: fixed;
+  top: 10px;
+  right: 10px;
 }
 
 button {
-    background-color: #ff3b3b;
-    color: white;
-    padding: 8px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: bold;
+  background-color: #ff3b3b;
+  color: white;
+  padding: 2px 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+/* Media Query für Bildschirmbreiten bis 600px */
+@media screen and (max-width: 600px) {
+  .emergency-button {
+    font-size: 7px;
+  }
 }
 
+/* Media Query für Bildschirmbreiten von 601px bis 900px */
+@media screen and (min-width: 601px) and (max-width: 900px) {
+  .emergency-button {
+    font-size: 6px;
+  }
+}
+
+/* Media Query für Bildschirmbreiten ab 901px */
+@media screen and (min-width: 901px) {
+  .emergency-button {
+    font-size: 12px;
+  }
+}
 .row::after {
     content: "";
     clear: both;

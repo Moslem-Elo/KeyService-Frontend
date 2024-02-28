@@ -170,7 +170,7 @@ body {
 h2 {
   font-weight: bold;
   color: #f5f5f6;
-  text-align: center;
+  text-align: left;
 }
 
 .container {

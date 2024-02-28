@@ -1,6 +1,7 @@
 <template>
 
     <div>
+
         <div class="sidebar">
             <img src="@/assets/slogo2.jpg" alt="Logo" class="logo"/>
             <router-link to="/" class="nav-link" :class="{ 'active': $route.path === '/' }">Home</router-link>
@@ -9,7 +10,7 @@
         </div>
 
         <div class="content">
-
+          <img src="@/assets/name.png" alt="Logo" class="logo2">
             <router-view></router-view>
         </div>
     </div>
@@ -66,11 +67,11 @@ window.addEventListener('resize', () => {
 }
 .logo2 {
    /* Stellt sicher, dass das Logo korrekt gerendert wird */
-   /* Zentriert das Logo innerhalb der Sidebar */
+  display: block; /* Zentriert das Logo innerhalb der Sidebar */
   padding: 10px 0; /* Fügt oben und unten etwas Platz hinzu */
   width: 30%; /* Passt die Breite des Logos an */
   max-height: 100px;
-  align-self: center;/* Beschränkt die Höhe des Logos, um Übergrößen zu vermeiden */
+  margin: 0 auto;/* Beschränkt die Höhe des Logos, um Übergrößen zu vermeiden */
 }
 body {
     margin: 0;

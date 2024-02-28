@@ -1,6 +1,5 @@
 <template>
-  <h1>Expert</h1>
-  <p> Schuh- und Schlüsselservice</p>
+
   <div>
 
         <!-- 24h Notdienst Button -->
@@ -27,7 +26,9 @@
         <!-- Bereich für zusätzliche Informationen -->
         <div class="additional-info">
             <h3 style="color: white;">Dienstleistungen</h3>
+          <div class="info-text">
             <p style="color: #ccc;">Hier können Sie weitere Informationen zu unseren Dienstleistungen, Preisen, usw. zur Kenntnis nehmen.</p>
+          </div>
 
             <!-- Tabelle für Dienstleistungen -->
             <div class="search-container">
@@ -89,13 +90,11 @@ const filterTable = () => {
 </script>
 
 <style scoped>
-.logo {
-  display: block; /* Stellt sicher, dass das Logo korrekt gerendert wird */
-  margin: 0 auto; /* Zentriert das Logo innerhalb der Sidebar */
-  padding: 0px 0; /* Fügt oben und unten etwas Platz hinzu */
-  width: 100%; /* Passt die Breite des Logos an */
-  max-height: 100px; /* Beschränkt die Höhe des Logos, um Übergrößen zu vermeiden */
+.info-text p {
+  text-align: left;
+  margin-left: 10px; /* Optional: Fügt einen linken Abstand hinzu */
 }
+
 .search-container {
     margin-bottom: 20px;
     text-align: left;

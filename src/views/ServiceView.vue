@@ -58,7 +58,7 @@
             <label for="bild">Bild:</label>
           </div>
           <div class="col-75">
-            <input type="file" id="bild" name="bild" accept="image/*">
+            <input type="file" id="bild" name="bild" accept="image/*" class="bild">
           </div>
         </div>
         <div class="row">
@@ -147,6 +147,7 @@ const alertMessage = computed(() => {
   background-color: #f44336;
 }
 
+
 .closebtn {
   margin-left: 15px;
   color: #fffcfc;
@@ -186,7 +187,7 @@ input[type="email"] {
   border-radius: 4px;
   resize: vertical;
   background-color: #fffcfc;
-  color: #fffcfc;
+  color: #000000;
 }
 
 input[type="text"],
@@ -198,7 +199,7 @@ textarea {
   border-radius: 4px;
   resize: vertical;
   background-color: #fffcfc;
-  color: #fffcfc;
+  color: #000000;
 }
 
 .telefon-eingabe {
@@ -256,6 +257,7 @@ input[type=submit]:hover {
   margin-top: 6px;
   font-weight: bold;
   color: black;
+
 }
 
 @media screen and (max-width: 600px) {

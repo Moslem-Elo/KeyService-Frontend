@@ -1,18 +1,21 @@
 <template>
 
-    <div>
+    <div class="all">
 
         <div class="sidebar">
             <img src="@/assets/slogo2.jpg" alt="Logo" class="logo"/>
             <router-link to="/" class="nav-link" :class="{ 'active': $route.path === '/' }">Home</router-link>
             <router-link to="/service" class="nav-link" :class="{ 'active': $route.path === '/service' }">Service</router-link>
             <router-link to="/login" class="nav-link" :class="{ 'active': $route.path === '/contact' }">Login</router-link>
-        </div>
+          </div>
+
 
         <div class="content">
-          <img src="@/assets/name.png" alt="Logo" class="logo2">
-            <router-view></router-view>
+          <img src="@/assets/name.png" class="logo2">
+
+          <router-view></router-view>
         </div>
+      <img src="@/assets/background.jpg" class="back">
     </div>
 </template>
 
@@ -61,7 +64,7 @@ window.addEventListener('resize', () => {
 .logo {
   display: block; /* Stellt sicher, dass das Logo korrekt gerendert wird */
   margin: 0 auto; /* Zentriert das Logo innerhalb der Sidebar */
-  padding: 0px 0; /* Fügt oben und unten etwas Platz hinzu */
+  padding: 0 0; /* Fügt oben und unten etwas Platz hinzu */
   width: 100%; /* Passt die Breite des Logos an */
   max-height: 100px; /* Beschränkt die Höhe des Logos, um Übergrößen zu vermeiden */
 }
@@ -74,14 +77,29 @@ window.addEventListener('resize', () => {
   margin: 0 auto;/* Beschränkt die Höhe des Logos, um Übergrößen zu vermeiden */
 }
 body {
-    margin: 0;
+
     font-family: "Lato", sans-serif;
 }
 
-
 .content {
-  background-image: url('@/assets/background.jpg');
-  color: #fffcfc;
+  background-image: url('@/assets/background.jpg'); /* Stelle sicher, dass der Pfad korrekt ist */
+  background-size: auto; /* Behält die ursprüngliche Größe des Bildes bei */
+  background-position: top left; /* Startet das Bild in der oberen linken Ecke */
+  background-repeat: repeat; /* Wiederholt das Bild */
+  color: #ffffff;
+  margin-left: 200px; /* Passt den linken Rand an, abhängig von deiner Sidebar */
+  padding: 1px 16px;
+  transition: margin-left 0.3s;
+  min-height: 100vh; /* Stellt sicher, dass der Inhalt mindestens die Höhe des Viewports einnimmt */
+}
+.back {
+  position: fixed; /* oder 'absolute', je nach Bedarf */
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1; /* Stellt sicher, dass es hinter anderen Inhalten bleibt */
+  object-fit: cover; /* Sorgt dafür, dass das Bild den Container vollständig bedeckt, ohne dessen Verhältnisse zu verzerren */
 }
 
 

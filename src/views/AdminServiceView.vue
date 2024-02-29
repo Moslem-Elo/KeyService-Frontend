@@ -1,4 +1,5 @@
 <template>
+<div class="all">
   <div>
     <h2>Durchsuchen der vorhandenen Anfragen</h2>
 
@@ -55,6 +56,7 @@
       </div>
     </div>
   </div>
+</div>
 </template>
 
 <script setup>
@@ -170,6 +172,18 @@ onMounted(() => {
 </script>
 
 <style scoped>
+.all {
+  background-image: url('@/assets/background.jpg'); /* Stelle sicher, dass der Pfad korrekt ist */
+  /* Behält die ursprüngliche Größe des Bildes bei */
+   /* Startet das Bild in der oberen linken Ecke */
+  background-repeat: repeat; /* Wiederholt das Bild */
+  color: #ffffff;
+
+   /* Passt den linken Rand an, abhängig von deiner Sidebar */
+
+  transition: margin-left 0.3s;
+  min-height: 100vh; /* Stellt sicher, dass der Inhalt mindestens die Höhe des Viewports einnimmt */
+}
 .status-select {
   width: 30%; /* Passen Sie dies an Ihre Bedürfnisse an */
   padding: 5px;
